@@ -34,6 +34,9 @@ namespace NewsSite
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseDeveloperExceptionPage();
+            app.UseStaticFiles();
+            app.UseDirectoryBrowser();
             app.UseMvc();
         }
     }
