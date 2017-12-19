@@ -260,7 +260,8 @@ paket-files/
 __pycache__/
 *.pyc
 
-# Appsettings json
+# ASP.NET Core appsettings
 appsettings.json
-appsettings.Development.json
 appsettings.production.json
+appsettings.development.json
+
