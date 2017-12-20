@@ -18,5 +18,49 @@
         </div>
     </div>
 
+    <div class="container">
+        <div class="row">
+
+            <!-- Step 1 -->
+            <div class="col">
+                <h1>Användare</h1>
+                <p class="lead">Steg 1</p>
+                <hr />
+                <button id="recreateUsers" class="btn btn-warning btn-block">Återskapa alla användare</button>
+                <button id="getUsers" class="btn btn-warning btn-block">Hämta alla användare inklusive claims</button>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="col">
+                <h1>Logga in</h1>
+                <p class="lead">Steg 2</p>
+                <hr />
+                <div class="form-group">
+                    <select class="form-control" id="userEmailList">
+                        <!--<option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>-->
+                    </select>
+                </div>
+                <button id="signIn" class="btn btn-success btn-block">Logga in</button>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="col">
+                <h1>Kolla Access</h1>
+                <p class="lead">Steg 3</p>
+                <hr />
+                <button id="accessToOpenArticle" class="btn btn-info btn-block">Kan se öppen nyhet?</button>
+                <button id="accessToHiddenArticle" class="btn btn-info btn-block">Kan se dold nyhet?</button>
+                <button id="accessToHiddenArticleAndEG20" class="btn btn-info btn-block">Kan se dold nyhet och är 20 år eller äldre?</button>
+                <button id="allowedToPublishSportsArticle" class="btn btn-info btn-block">Kan publicera en sportnyhet?</button>
+                <button id="allowedToPublishCultureArticle" class="btn btn-info btn-block">Kan publicera en kulturnyhet?</button>
+            </div>
+
+        </div>
+    </div>
+
 </body>
 </html>
