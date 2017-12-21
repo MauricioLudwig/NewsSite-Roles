@@ -33,10 +33,10 @@ namespace NewsSite.Controllers
             context.RemoveRange(context.Users);
 
             var users = new List<User>() {
-                //new User { FirstName = "Adam", UserName = "adam@gmail.com" },
-                new User { FirstName = "Peter", UserName = "peter@gmail.com" },
-                new User { FirstName = "Susan", Age = 48, UserName = "susan@gmail.com" },
-                new User { FirstName = "Viktor", Age = 15, UserName = "viktor@gmail.com" },
+                new User { FirstName = "Adam",   UserName = "adam@gmail.com" },
+                new User { FirstName = "Peter",  UserName = "peter@gmail.com" },
+                new User { FirstName = "Susan",  UserName = "susan@gmail.com",  Age = 48 },
+                new User { FirstName = "Viktor", UserName = "viktor@gmail.com", Age = 15, },
                 new User { FirstName = "Xerxes", UserName = "xerxes@gmail.com" },
             };
 
@@ -49,8 +49,8 @@ namespace NewsSite.Controllers
         }
 
         [HttpGet]
-        [Route("getemaillist")]
-        public IActionResult GetEmailList()
+        [Route("getuseremails")]
+        public IActionResult GetUserEmails()
         {
             return Ok(context.Users
                 .Select(o => new IndexVM
@@ -75,7 +75,7 @@ namespace NewsSite.Controllers
             if (user != null)
             {
                 await signInManager.SignInAsync(user, false);
-                return Ok($"{user.FirstName}");
+                return Ok($"{user.FirstName} was successfully signed in");
             }
             else
             {
@@ -83,5 +83,6 @@ namespace NewsSite.Controllers
             }
 
         }
+
     }
 }

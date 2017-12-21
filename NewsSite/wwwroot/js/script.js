@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 
-    retrieveUserEmails();
+    getUserEmails();
 
     // Cached variables
     var recreateUsers = $('#recreateUsers');
@@ -16,7 +16,8 @@
     var allowedToPublishCultureArticle = $('#allowedToPublishCultureArticle');
 
     recreateUsers.on('click', function () {
-        ajaxCallToConsole('/api/home/resetdb', 'GET');
+        console.log('Recreating users from db');
+        $.when(ajaxCallToConsole('/api/home/resetdb', 'GET')).then(getUserEmails())
     });
 
     getUsersAndClaims.on('click', function () {
@@ -42,10 +43,6 @@
     allowedToPublishCultureArticle.on('click', function () {
     });
 
-    function retrieveUserEmails() {
-        ajaxCallGetEmailList('/api/home/getemaillist', 'GET');
-    }
-
     function ajaxCallToConsole(url, type, viewModel) {
 
         $.ajax({
@@ -61,19 +58,23 @@
 
     }
 
-    function ajaxCallGetEmailList(url, type, viewModel) {
+    function getUserEmails() {
+
+        console.log('Populating dropdownlist');
+        $('#spinner').show();
 
         $.ajax({
-            url: url,
-            type: type,
-            data: { 'viewModel': viewModel }
+            url: '/api/home/getuseremails',
+            type: 'GET',
         }).done(function (result) {
+            userEmailList.empty();
             $.each(result, function (i, user) {
-                console.log(user.email);
                 userEmailList.append(`<option id="${user.id}">${user.email}</option>`);
             });
+            $('#spinner').hide();
         }).fail(function (xhr, status, error) {
             console.log('error');
+            $('#spinner').show();
         });
 
     }
