@@ -8,6 +8,7 @@
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous"></script>
     <script src="js/script.js"></script>
+    <link rel="icon" href="img/favicon.ico"/>
 </head>
 <body>
 
@@ -27,7 +28,7 @@
                 <p class="lead">Steg 1</p>
                 <hr />
                 <button id="recreateUsers" class="btn btn-warning btn-block">Återskapa alla användare</button>
-                <button id="getUsers" class="btn btn-warning btn-block">Hämta alla användare inklusive claims</button>
+                <button id="getUsersAndClaims" class="btn btn-warning btn-block">Hämta alla användare inklusive claims</button>
             </div>
 
             <!-- Step 2 -->
@@ -36,13 +37,7 @@
                 <p class="lead">Steg 2</p>
                 <hr />
                 <div class="form-group">
-                    <select class="form-control" id="userEmailList">
-                        <!--<option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>-->
-                    </select>
+                    <select class="form-control" id="userEmailList"></select>
                 </div>
                 <button id="signIn" class="btn btn-success btn-block">Logga in</button>
             </div>

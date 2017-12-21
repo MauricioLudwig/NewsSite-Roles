@@ -7,11 +7,17 @@ using System.Threading.Tasks;
 
 namespace NewsSite.Models
 {
-    public class NewsSiteContext : IdentityDbContext<User>
+    public class NewsSiteContext : IdentityDbContext<User, UserRole, string>
     {
 
-        public NewsSiteContext(DbContextOptions<NewsSiteContext> options) : base (options)
+        public NewsSiteContext(DbContextOptions<NewsSiteContext> options) 
+            : base (options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
         }
 
     }

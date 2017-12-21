@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace NewsSite.Models
 {
-    public class User : IdentityUser
+    public class UserRole : IdentityRole
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public int? Age { get; set; }
     }
 }

@@ -11,9 +11,10 @@ using System;
 namespace NewsSite.Migrations
 {
     [DbContext(typeof(NewsSiteContext))]
-    partial class NewsSiteContextModelSnapshot : ModelSnapshot
+    [Migration("20171221112149_Third-Instance")]
+    partial class ThirdInstance
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,7 +112,7 @@ namespace NewsSite.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<int?>("Age");
+                    b.Property<int>("Age");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
