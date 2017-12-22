@@ -17,7 +17,7 @@
 
     recreateUsers.on('click', function () {
         console.log('Recreating users from db');
-        $.when(ajaxCallToConsole('/api/home/resetdb', 'GET')).then(getUserEmails())
+        $.when(ajaxCallToConsole('/api/account/resetdb', 'GET')).then(getUserEmails());
     });
 
     getUsersAndClaims.on('click', function () {
@@ -25,7 +25,7 @@
 
     signIn.on('click', function () {
         var viewModel = userEmailList.val();
-        ajaxCallToConsole('api/home/signin', 'POST', viewModel);
+        ajaxCallToConsole('api/account/signin', 'POST', viewModel);
     });
 
     accessToOpenArticle.on('click', function () {
@@ -65,7 +65,7 @@
 
         $.ajax({
             url: '/api/home/getuseremails',
-            type: 'GET',
+            type: 'GET'
         }).done(function (result) {
             userEmailList.empty();
             $.each(result, function (i, user) {
@@ -74,7 +74,7 @@
             $('#spinner').hide();
         }).fail(function (xhr, status, error) {
             console.log('error');
-            $('#spinner').show();
+            $('#spinner').hide();
         });
 
     }

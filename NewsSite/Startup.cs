@@ -26,7 +26,6 @@ namespace NewsSite
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddDbContext<NewsSiteContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -35,6 +34,12 @@ namespace NewsSite
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AllowedToPublish", policy => policy.RequireRole("Publisher"));
+                options.AddPolicy("AllowedToView", policy => policy.RequireRole("Publisher", "Subscriber"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

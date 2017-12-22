@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NewsSite.Models;
@@ -27,15 +28,14 @@ namespace NewsSite.Controllers
             this.context = context;
         }
 
-
         [HttpGet]
-        public IActionResult OpenArticle()
+        public IActionResult PublishSportsArticle()
         {
             return Ok();
         }
 
         [HttpGet]
-        public IActionResult HiddenArticle()
+        public IActionResult PublishCultureArticle()
         {
             return Ok();
         }
