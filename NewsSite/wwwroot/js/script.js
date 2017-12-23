@@ -5,6 +5,7 @@
     // Cached variables
     var recreateUsers = $('#recreateUsers');
     var getUsersAndClaims = $('#getUsersAndClaims');
+    var removeusers = $('#removeusers');
 
     var userEmailList = $('#userEmailList');
     var signIn = $('#signIn');
@@ -16,8 +17,7 @@
     var allowedToPublishCultureArticle = $('#allowedToPublishCultureArticle');
 
     recreateUsers.on('click', function () {
-        console.log('Recreating users from db');
-        $.when(ajaxCallToConsole('/api/account/resetdb', 'GET')).then(getUserEmails());
+        resetDb();
     });
 
     getUsersAndClaims.on('click', function () {
@@ -43,6 +43,10 @@
     allowedToPublishCultureArticle.on('click', function () {
     });
 
+    removeusers.on('click', function () {
+        removeUsersFromDb();
+    });
+
     function ajaxCallToConsole(url, type, viewModel) {
 
         $.ajax({
@@ -58,9 +62,46 @@
 
     }
 
+
+    function resetDb() {
+
+        $('#spinner').show();
+        console.log('resetdb');
+
+        $.ajax({
+            url: '/api/account/resetdb',
+            type: 'GET',
+        }).done(function (result) {
+            console.log('success');
+            console.log(result);
+            getUserEmails();
+        }).fail(function (xhr, status, error) {
+            console.log('error: ' + xhr.responseText);
+        });
+
+    }
+
+    function removeUsersFromDb() {
+
+        $('#spinner').show();
+        console.log('removeUsersFromDb');
+
+        $.ajax({
+            url: '/api/account/removeusers',
+            type: 'GET',
+        }).done(function (result) {
+            console.log('success');
+            console.log(result);
+            getUserEmails();
+        }).fail(function (xhr, status, error) {
+            console.log('error: ' + xhr.responseText);
+        });
+
+    }
+
     function getUserEmails() {
 
-        console.log('Populating dropdownlist');
+        console.log('getuseremails');
         $('#spinner').show();
 
         $.ajax({

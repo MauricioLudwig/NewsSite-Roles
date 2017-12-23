@@ -50,6 +50,7 @@ namespace NewsSite.Controllers
         {
 
             context.RemoveRange(userManager.Users);
+            context.SaveChanges();
 
             var users = new List<DefaultUser>
             {
@@ -71,13 +72,14 @@ namespace NewsSite.Controllers
 
                 var result = await userManager.CreateAsync(newUser);
                 
-                if (result.Succeeded)
-                {
-                    if (user.Role != null)
-                        await userManager.AddToRoleAsync(newUser, user.Role);
-                }
+                //if (result.Succeeded)
+                //{
+                //    if (user.Role != null)
+                //        await userManager.AddToRoleAsync(newUser, user.Role);
+                //}
             }
 
+            context.SaveChanges();
             return Ok(userManager.Users);
         }
 
@@ -101,6 +103,15 @@ namespace NewsSite.Controllers
                 return NotFound($"User {viewModel} was not found");
             }
 
+        }
+
+        [HttpGet]
+        [Route("removeusers")]
+        public IActionResult Remove()
+        {
+            context.RemoveRange(userManager.Users);
+            context.SaveChanges();
+            return Ok();
         }
 
     }

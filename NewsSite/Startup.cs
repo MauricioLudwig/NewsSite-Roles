@@ -35,11 +35,11 @@ namespace NewsSite
 
             services.AddMvc();
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("AllowedToPublish", policy => policy.RequireRole("Publisher"));
-                options.AddPolicy("AllowedToView", policy => policy.RequireRole("Publisher", "Subscriber"));
-            });
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("AllowedToPublish", policy => policy.RequireRole("Publisher"));
+            //    options.AddPolicy("AllowedToView", policy => policy.RequireRole("Publisher", "Subscriber"));
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
