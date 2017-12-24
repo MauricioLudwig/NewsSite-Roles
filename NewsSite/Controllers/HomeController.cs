@@ -37,5 +37,25 @@ namespace NewsSite.Controllers
                 .ToArray());
         }
 
+        [HttpGet]
+        [Route("getlistofclaims")]
+        public async Task<IActionResult> GetListOfClaims()
+        {
+            var viewModel = new List<ListClaimsVM>();
+
+            foreach (var user in userManager.Users)
+            {
+                var claims = await userManager.GetClaimsAsync(user);
+
+                viewModel.Add(new ListClaimsVM
+                {
+                    Email = user.UserName,
+                    Claims = claims.ToList()
+                });
+            }
+
+            return Ok(viewModel);
+        }
+
     }
 }

@@ -21,6 +21,8 @@
     });
 
     getUsersAndClaims.on('click', function () {
+        console.log('getting list of user claims');
+        ajaxCallToConsole('api/home/getlistofclaims', 'GET');
     });
 
     signIn.on('click', function () {
@@ -71,7 +73,7 @@
     function resetDb() {
 
         $('#spinner').show();
-        console.log('resetdb');
+        console.log('resetdb...');
 
         $.ajax({
             url: '/api/account/resetdb',
