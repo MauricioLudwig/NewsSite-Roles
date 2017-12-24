@@ -86,7 +86,7 @@ namespace NewsSite.Controllers
                             {
                                 case "peter@gmail.com":
                                     await userManager.AddClaimAsync(newUser, new Claim("publication", "sports"));
-                                    await userManager.AddClaimAsync(newUser, new Claim("publication", "culture"));
+                                    await userManager.AddClaimAsync(newUser, new Claim("publication", "economy"));
                                     break;
                             }
                             break;
