@@ -11,9 +11,10 @@ using System;
 namespace NewsSite.Migrations
 {
     [DbContext(typeof(NewsSiteContext))]
-    partial class NewsSiteContextModelSnapshot : ModelSnapshot
+    [Migration("20171223225102_DefaultIdentityRole")]
+    partial class DefaultIdentityRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

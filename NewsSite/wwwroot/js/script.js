@@ -29,18 +29,23 @@
     });
 
     accessToOpenArticle.on('click', function () {
+        ajaxCallToConsole('api/news/open', 'GET');
     });
 
     accessToHiddenArticle.on('click', function () {
+        ajaxCallToConsole('api/news/hidden', 'GET');
     });
 
     accessToHiddenArticleAndEG20.on('click', function () {
+        ajaxCallToConsole('api/news/hiddenandadult', 'GET');
     });
 
     allowedToPublishSportsArticle.on('click', function () {
+        ajaxCallToConsole('api/news/sports', 'GET');
     });
 
     allowedToPublishCultureArticle.on('click', function () {
+        ajaxCallToConsole('api/news/culture', 'GET');
     });
 
     removeusers.on('click', function () {
@@ -70,7 +75,7 @@
 
         $.ajax({
             url: '/api/account/resetdb',
-            type: 'GET',
+            type: 'GET'
         }).done(function (result) {
             console.log('success');
             console.log(result);
@@ -88,7 +93,7 @@
 
         $.ajax({
             url: '/api/account/removeusers',
-            type: 'GET',
+            type: 'GET'
         }).done(function (result) {
             console.log('success');
             console.log(result);

@@ -14,14 +14,12 @@ namespace NewsSite.Controllers
 
         UserManager<User> userManager;
         SignInManager<User> signInManager;
-        RoleManager<UserRole> roleManager;
         NewsSiteContext context;
 
-        public HomeController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<UserRole> roleManager, NewsSiteContext context)
+        public HomeController(UserManager<User> userManager, SignInManager<User> signInManager, NewsSiteContext context)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
-            this.roleManager = roleManager;
             this.context = context;
         }
 

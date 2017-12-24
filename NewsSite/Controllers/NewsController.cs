@@ -17,10 +17,10 @@ namespace NewsSite.Controllers
 
         UserManager<User> userManager;
         SignInManager<User> signInManager;
-        RoleManager<UserRole> roleManager;
+        RoleManager<IdentityRole> roleManager;
         NewsSiteContext context;
 
-        public NewsController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<UserRole> roleManager, NewsSiteContext context)
+        public NewsController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, NewsSiteContext context)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
@@ -29,15 +29,44 @@ namespace NewsSite.Controllers
         }
 
         [HttpGet]
-        public IActionResult PublishSportsArticle()
+        [AllowAnonymous]
+        [Route("open")]
+        public IActionResult AllowAccessToOpenNews()
         {
-            return Ok();
+            return Ok("Access to open news allowed");
+        }
+
+        [Authorize(Policy = "AccessToHiddenNews")]
+        [HttpGet]
+        [Route("hidden")]
+        public IActionResult AllowAccessToHiddenNews()
+        {
+            return Ok("Access to hidden news allowed");
         }
 
         [HttpGet]
+        [Route("hiddenandadult")]
+        [Authorize(Policy = "AccessToHiddenNews")]
+        [Authorize(Policy = "Adult")]
+        public IActionResult HiddenAndAdult()
+        {
+            return Ok("You can view this article and");
+        }
+
+        [HttpGet]
+        [Route("sports")]
+        [Authorize(Policy = "PublishSports")]
+        public IActionResult PublishSportsArticle()
+        {
+            return Ok("You may submit sports article");
+        }
+
+        [HttpGet]
+        [Route("culture")]
+        [Authorize(Policy = "PublishCulture")]
         public IActionResult PublishCultureArticle()
         {
-            return Ok();
+            return Ok("You may submit culture article");
         }
 
     }

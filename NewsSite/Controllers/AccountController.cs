@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +15,12 @@ namespace NewsSite.Controllers
     public class AccountController : Controller
     {
 
-        static readonly string[] roles = { "Administrator" , "Publisher", "Subscriber" };
-
         UserManager<User> userManager;
         SignInManager<User> signInManager;
-        RoleManager<UserRole> roleManager;
+        RoleManager<IdentityRole> roleManager;
         NewsSiteContext context;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<UserRole> roleManager, NewsSiteContext context)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, NewsSiteContext context)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
@@ -29,16 +28,19 @@ namespace NewsSite.Controllers
             this.context = context;
         }
 
-        internal async void AddRolesToIdentity()
+        [HttpGet]
+        [Route("addroles")]
+        public async Task AddRolesToIdentity()
         {
+
+            string[] roles = { "Administrator", "Publisher", "Subscriber" };
+
             foreach (var role in roles)
             {
                 var roleExists = await roleManager.RoleExistsAsync(role);
-
                 if (!roleExists)
                 {
-                    var newRole = new UserRole();
-                    newRole.Name = role;
+                    var newRole = new IdentityRole(role);
                     await roleManager.CreateAsync(newRole);
                 }
             }
@@ -71,12 +73,30 @@ namespace NewsSite.Controllers
                 };
 
                 var result = await userManager.CreateAsync(newUser);
-                
-                //if (result.Succeeded)
-                //{
-                //    if (user.Role != null)
-                //        await userManager.AddToRoleAsync(newUser, user.Role);
-                //}
+
+                if (result.Succeeded)
+                {
+                    if (user.Role != null)
+                        await userManager.AddToRoleAsync(newUser, user.Role);
+
+                    switch (user.Role)
+                    {
+                        case "Publisher":
+                            switch (user.Email)
+                            {
+                                case "peter@gmail.com":
+                                    await userManager.AddClaimAsync(newUser, new Claim("publication", "sports"));
+                                    await userManager.AddClaimAsync(newUser, new Claim("publication", "culture"));
+                                    break;
+                            }
+                            break;
+                        case "Subscriber":
+                            break;
+                        case "Administrator":
+                            await userManager.AddClaimAsync(newUser, new Claim("publication", "admin"));
+                            break;
+                    }
+                }
             }
 
             context.SaveChanges();
@@ -88,8 +108,8 @@ namespace NewsSite.Controllers
         public async Task<IActionResult> SignIn(string viewModel)
         {
 
-            if (!ModelState.IsValid)
-                return View(viewModel);
+            if (!ModelState.IsValid || String.IsNullOrEmpty(viewModel))
+                return BadRequest("Bad request");
 
             var user = await userManager.FindByNameAsync(viewModel);
 
@@ -107,8 +127,9 @@ namespace NewsSite.Controllers
 
         [HttpGet]
         [Route("removeusers")]
-        public IActionResult Remove()
+        public async Task<IActionResult> Remove()
         {
+            await signInManager.SignOutAsync();
             context.RemoveRange(userManager.Users);
             context.SaveChanges();
             return Ok();

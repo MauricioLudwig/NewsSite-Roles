@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NewsSite.Models
 {
-    public class NewsSiteContext : IdentityDbContext<User, UserRole, string>
+    public class NewsSiteContext : IdentityDbContext<User>
     {
 
         public NewsSiteContext(DbContextOptions<NewsSiteContext> options) 

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NewsSite.Authorization;
 using NewsSite.Models;
 
 namespace NewsSite
@@ -29,17 +30,29 @@ namespace NewsSite
             services.AddDbContext<NewsSiteContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, UserRole>()
+            services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<NewsSiteContext>()
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
 
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy("AllowedToPublish", policy => policy.RequireRole("Publisher"));
-            //    options.AddPolicy("AllowedToView", policy => policy.RequireRole("Publisher", "Subscriber"));
-            //});
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AccessToHiddenNews", policy => 
+                    policy.RequireRole("Publisher", "Subscriber", "Administrator"));
+
+                options.AddPolicy("Adult", policy =>
+                    policy.RequireClaim(""));
+
+                options.AddPolicy("PublishEconomy", policy =>
+                    policy.RequireClaim("publication", "economy", "admin"));
+
+                options.AddPolicy("PublishSports", policy =>
+                    policy.RequireClaim("publication", "sports", "admin"));
+
+                options.AddPolicy("PublishCulture", policy =>
+                    policy.RequireClaim("publication", "culture", "admin"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
