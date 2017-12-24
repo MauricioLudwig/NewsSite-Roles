@@ -85,15 +85,20 @@ namespace NewsSite.Controllers
                             switch (user.Email)
                             {
                                 case "peter@gmail.com":
-                                    await userManager.AddClaimAsync(newUser, new Claim("publication", "sports"));
-                                    await userManager.AddClaimAsync(newUser, new Claim("publication", "economy"));
+                                    await userManager.AddClaimAsync(newUser, new Claim("news", "publishsports"));
+                                    await userManager.AddClaimAsync(newUser, new Claim("news", "publisheconomy"));
                                     break;
                             }
+                            await userManager.AddClaimAsync(newUser, new Claim("news", "publisher"));
                             break;
                         case "Subscriber":
+                            if (user.Age >= 20)
+                            {
+                                await userManager.AddClaimAsync(newUser, new Claim("news", "readerAtleast20"));
+                            }
                             break;
                         case "Administrator":
-                            await userManager.AddClaimAsync(newUser, new Claim("publication", "admin"));
+                            await userManager.AddClaimAsync(newUser, new Claim("news", "admin"));
                             break;
                     }
                 }

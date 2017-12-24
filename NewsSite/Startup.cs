@@ -10,7 +10,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using NewsSite.Authorization;
 using NewsSite.Models;
 
 namespace NewsSite
@@ -42,16 +41,16 @@ namespace NewsSite
                     policy.RequireRole("Publisher", "Subscriber", "Administrator"));
 
                 options.AddPolicy("Adult", policy =>
-                    policy.RequireClaim(""));
+                    policy.RequireClaim("news", "readerAtleast20", "admin", "publisher"));
 
                 options.AddPolicy("PublishEconomy", policy =>
-                    policy.RequireClaim("publication", "economy", "admin"));
+                    policy.RequireClaim("news", "publisheconomy", "admin"));
 
                 options.AddPolicy("PublishSports", policy =>
-                    policy.RequireClaim("publication", "sports", "admin"));
+                    policy.RequireClaim("news", "publishsports", "admin"));
 
                 options.AddPolicy("PublishCulture", policy =>
-                    policy.RequireClaim("publication", "culture", "admin"));
+                    policy.RequireClaim("news", "publishculture", "admin"));
             });
         }
 

@@ -50,7 +50,7 @@ namespace NewsSite.Controllers
         [Authorize(Policy = "Adult")]
         public IActionResult HiddenAndAdult()
         {
-            return Ok("You can view this article and");
+            return Ok("You are allowed to view this article");
         }
 
         [HttpGet]
